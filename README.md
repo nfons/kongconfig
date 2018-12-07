@@ -7,9 +7,12 @@ Generate / Import  Kong api configs
 
 
 ## Usage
-`$ kongconfig [OPTIONS]`  Exports a local state to kong
+`$ kongconfig [subcommand] [OPTIONS]`  
 
-`$ kongconfig import [OPTIONS]` Imports a sate from kong to local files
+### Sub Commands
+`import` imports kong state (routes / services) to local files
+`routes` Exports Routes to a local file: routes.yaml
+`services` Exports Services to a local file: service.yaml
 
 ### Options:
 * `-f, --file` : "File name to use during Export
