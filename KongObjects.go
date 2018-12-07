@@ -11,16 +11,18 @@ type Service struct {
 	Write_timeout int     `json:"write_timeout"`
 	Read_timeout  int     `json:"read_timeout"`
 }
-
+type serviceField struct {
+	Id string `json:"id"`
+}
 type Routes struct {
-	Hosts          []string            `json:"hosts"`
-	Preserver_host bool                `json:"preserver_host"`
-	Service        struct{ Id string } `json:"service"`
-	Paths          []string            `json:"paths"`
-	Methods        []string            `json:"methods"`
-	Strip_path     bool                `json:"strip_path"`
-	Protocols      []string            `json:"protocols"`
-	ServiceName    string              //this is not an actual json field
+	Hosts         []string     `json:"hosts"`
+	Preserve_host bool         `json:"preserve_host"`
+	Service       serviceField `json:"service"`
+	Paths         []string     `json:"paths"`
+	Methods       []string     `json:"methods"`
+	Strip_path    bool         `json:"strip_path"`
+	Protocols     []string     `json:"protocols"`
+	ServiceName   string       `json:"-"` //this is not an actual json field
 }
 
 type Certificates struct {

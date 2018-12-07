@@ -3,28 +3,27 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-func MakeRoutes(path string) error {
-	res, err := http.Get("http://localhost:8001/routes/523ceb34-d8a5-4e19-81d7-7a6dd3e60c2a")
+func MakeRoutes(path string, payload []byte) error {
+	path = path + "/routes"
+	res, err := http.Post(path, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
 		log.Fatal(err)
 	}
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
 
-	service := Routes{}
-	jsonErr := json.Unmarshal(body, &service)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
+	code := res.StatusCode
+	byteBody, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+		return err
 	}
-
-	log.Println(service)
+	body := string(byteBody)
+	fmt.Printf("[Status: %d] %s", code, body)
 	return nil
 }
 
@@ -34,9 +33,16 @@ func MakeServices(path string, payload []byte) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	temp := Service{}
-	json.NewDecoder(resp.Body).Decode(&temp)
-	log.Println(temp)
+
+	code := resp.StatusCode
+	byteBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	body := string(byteBody)
+	fmt.Printf("[Status: %d] %s", code, body)
+
 	return nil
 }
 

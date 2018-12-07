@@ -50,7 +50,9 @@ func exportRoutesToKong(c *cli.Context) error {
 		//get the corresponding Id of a Service Name
 		serviceId := serviceMap[val.ServiceName]
 		val.Service.Id = serviceId
-		log.Println(val)
+		y, _ := json.Marshal(val)
+		log.Println(string(y))
+		MakeRoutes(api, y)
 	}
 
 	return nil
@@ -211,7 +213,7 @@ func main() {
 		},
 		{
 			Name:    "services",
-			Aliases: []string{"r"},
+			Aliases: []string{"s"},
 			Usage:   "Creates Services based on a file",
 			Action:  exportServicesToKong,
 			Flags: []cli.Flag{
