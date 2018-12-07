@@ -1,13 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-func MakeRoutes(path string) {
+func MakeRoutes(path string) error {
 	res, err := http.Get("http://localhost:8001/routes/523ceb34-d8a5-4e19-81d7-7a6dd3e60c2a")
 	if err != nil {
 		log.Fatal(err)
@@ -24,6 +25,19 @@ func MakeRoutes(path string) {
 	}
 
 	log.Println(service)
+	return nil
+}
+
+func MakeServices(path string, payload []byte) error {
+	path = path + "/services"
+	resp, err := http.Post(path, "application/json", bytes.NewBuffer(payload))
+	if err != nil {
+		log.Fatal(err)
+	}
+	temp := Service{}
+	json.NewDecoder(resp.Body).Decode(&temp)
+	log.Println(temp)
+	return nil
 }
 
 func getRoutes(path string, routes *[]Routes) error {

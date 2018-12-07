@@ -1,15 +1,15 @@
 package main
 
 type Service struct {
-	Host          string `json:"host"`
-	Protocol      string `json: "protocol"`
-	Name          string `json:"name"`
-	Port          int    `json:"port"`
-	Path          string `json:"path"`
-	Retries       int    `json:"retries"`
-	Id            string `json "id"`
-	Write_timeout int    `json:"write_timeout"`
-	Read_timeout  int    `json:"read_timeout"`
+	Host          *string `json:"host"`
+	Protocol      *string `json:"protocol"`
+	Name          *string `json:"name"`
+	Port          int     `json:"port"`
+	Path          *string `json:"path"`
+	Retries       int     `json:"retries"`
+	Id            *string `json:"id"`
+	Write_timeout int     `json:"write_timeout"`
+	Read_timeout  int     `json:"read_timeout"`
 }
 
 type Routes struct {
@@ -20,6 +20,7 @@ type Routes struct {
 	Methods        []string            `json:"methods"`
 	Strip_path     bool                `json:"strip_path"`
 	Protocols      []string            `json:"protocols"`
+	ServiceName    string              //this is not an actual json field
 }
 
 type Certificates struct {
